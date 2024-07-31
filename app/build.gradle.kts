@@ -15,6 +15,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // BuildConfig에 DB_PASSWORD 추가
+        val dbPassword = project.findProperty("DB_PASSWORD") as String? ?: ""
+        buildConfigField("String", "DB_PASSWORD", "\"$dbPassword\"")
     }
 
     buildTypes {
@@ -26,6 +30,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        buildConfig = true // BuildConfig 기능 활성화
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

@@ -2,6 +2,7 @@ package com.example.sql_kot
 
 import android.util.Log
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.sql.Connection
 import java.sql.DriverManager
@@ -13,7 +14,7 @@ class ConnectionHelper {
     private val ip = "172.1.1.0"
     private val database = "AndroidSTDB"
     private val uname = "sa"
-    private val pass = "test129"
+    private val pass = BuildConfig.DB_PASSWORD // 환경 변수에서 비밀번호 읽기
     private val port = "1433"
 
     fun connectToDatabase(): Single<String> {
@@ -54,5 +55,6 @@ class ConnectionHelper {
 
             result.toString()
         }.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()) // 메인 스레드에서 결과를 관찰
     }
 }
